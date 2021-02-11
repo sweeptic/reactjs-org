@@ -3,56 +3,44 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 const Page = () => {
-  const user = 'Max';
+  const user = { name: 'Max', permalink: 'http://blabla' };
   const avatarSize = '33';
-  const content = <Feed user={user} />;
 
-  const topBar = (
-    <NavigationBar>
-      <Link>
-        <Avatar user={user} size={avatarSize} />
-      </Link>
-    </NavigationBar>
+  const userLink = (
+    <Link href={user.permalink}>
+      <Avatar user={user} avatarSize={avatarSize} />
+    </Link>
   );
 
-  return <PageLayout topBar={topBar} content={content} />;
+  return <PageLayout userLink={userLink} />;
 };
 
 const PageLayout = props => {
-  const { topBar, content } = props;
-  return (
-    <div>
-      {topBar} <br /> {content}
-    </div>
-  );
+  const { userLink } = props;
+  return <NavigationBar userLink={userLink} />;
 };
 
 const NavigationBar = props => {
-  return <div>{props.children}</div>;
+  return <div> {props.userLink}</div>;
 };
 
-const Feed = props => {
+const Link = props => {
+  console.log(props);
+
   return (
     <div>
-      This is {props.user} feeds:
-      <ul>
-        <li>feed line 1 </li>
-        <li>feed line 2 </li>
-        <li>feed line 3 </li>
-      </ul>
+      {props.href}
+      <br />
+      {props.children}
     </div>
   );
 };
 
-const Link = props => {
-  return <div>{props.children}</div>;
-};
-
 const Avatar = props => {
-  const { user, size } = props;
+  const { user, avatarSize } = props;
   return (
     <div>
-      the user is: {user}, avatar size is : {size}
+      The user is {user.name}, avatar size is {avatarSize}
     </div>
   );
 };
