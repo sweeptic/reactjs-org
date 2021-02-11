@@ -6,27 +6,45 @@ const Page = () => {
   const user = { name: 'Max', permalink: 'http://blabla' };
   const avatarSize = '33';
 
+  const content = <Feed user={user} />;
+
   const userLink = (
-    <Link href={user.permalink}>
-      <Avatar user={user} avatarSize={avatarSize} />
-    </Link>
+    <NavigationBar>
+      <Link href={user.permalink}>
+        <Avatar user={user} avatarSize={avatarSize} />
+      </Link>
+    </NavigationBar>
   );
 
-  return <PageLayout userLink={userLink} />;
+  return <PageLayout userLink={userLink} content={content} />;
 };
 
 const PageLayout = props => {
-  const { userLink } = props;
-  return <NavigationBar userLink={userLink} />;
+  return (
+    <div>
+      {props.userLink} <br /> {props.content}
+    </div>
+  );
 };
 
 const NavigationBar = props => {
-  return <div> {props.userLink}</div>;
+  return <div> {props.children}</div>;
+};
+
+const Feed = props => {
+  return (
+    <div>
+      This is {props.user.name} feed:
+      <ul>
+        <li>1. feed line</li>
+        <li>2. feed line</li>
+        <li>3. feed line</li>
+      </ul>
+    </div>
+  );
 };
 
 const Link = props => {
-  console.log(props);
-
   return (
     <div>
       {props.href}
